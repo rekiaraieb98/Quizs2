@@ -13,7 +13,7 @@
  --s-top:#16a34a;--s-bot:#15803d;--s-text:#ffffff}
 html{font-size:18px}
 body{min-height:100vh;font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic","Noto Sans Arabic",Arial,sans-serif;color:var(--ink);line-height:1.8;
- background:linear-gradient(180deg,#e3f1ee 0%,#f4f8f7 45%,#eef3fa 100%) fixed;display:flex;justify-content:center;padding:18px 12px}
+ background:linear-gradient(160deg,#cdeee6 0%,#dff4ef 40%,#d3ecf5 100%) fixed;display:flex;position:relative;justify-content:center;padding:18px 12px}
 .wrap{width:100%;max-width:880px}
 h1{text-align:center;font-size:1.55rem;color:var(--acc2);margin:6px 0 16px;font-weight:800}
 .card{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 6px 24px #0f766e14}
@@ -102,6 +102,14 @@ h2{color:var(--acc2);margin:22px 0 4px;text-align:center;font-size:1.25rem}
  .btn{padding:12px 18px}
  .bar{font-size:.9rem}
 }
+
+#bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+#bg span{position:absolute;bottom:-12vh;opacity:0;filter:saturate(.8);animation:flo linear infinite;will-change:transform,opacity}
+@keyframes flo{0%{transform:translateY(0) rotate(-12deg);opacity:0}10%{opacity:.5}85%{opacity:.5}100%{transform:translateY(-118vh) rotate(14deg);opacity:0}}
+@keyframes sway{0%,100%{margin-left:0}50%{margin-left:26px}}
+.wrap{position:relative;z-index:1}
+@media(prefers-reduced-motion:reduce){#bg span{animation:none;opacity:.25;bottom:auto}}
+@media print{#bg{display:none!important}}
 @media print{
  .np,.note{display:none!important}
  body{display:block;background:#fff!important;padding:0}
@@ -113,6 +121,7 @@ h2{color:var(--acc2);margin:22px 0 4px;text-align:center;font-size:1.25rem}
 </style>
 </head>
 <body>
+<div id="bg" aria-hidden="true"></div>
 <div class="wrap">
  <h1 id="title">الفرض الإلكتروني في مادة المعلوماتية</h1>
 
@@ -501,6 +510,24 @@ async function loadBoard(){
 }
 
 init();
+
+/* أيقونات متحركة في الخلفية: مكوّنات الحاسوب ومجال المعلوماتية */
+(function(){
+  try{
+    const bg = document.getElementById('bg'); if(!bg) return;
+    const ic = ['💻','🖥️','⌨️','🖱️','💾','💿','🔌','🧠','🌐','📡','⚙️','🛡️','📱','🖨️','🔋','📶','🧮','🔍','🧩','📁','🔒','🎧','📊','🕹️','🧑‍💻','🔧','💡','📀'];
+    const n = window.innerWidth < 620 ? 14 : 26;
+    for(let i = 0; i < n; i++){
+      const e = document.createElement('span');
+      e.textContent = ic[i % ic.length];
+      e.style.left = (Math.random() * 94) + '%';
+      e.style.fontSize = (26 + Math.random() * 30) + 'px';
+      e.style.animationDuration = (16 + Math.random() * 16) + 's';
+      e.style.animationDelay = (-Math.random() * 30) + 's';
+      bg.appendChild(e);
+    }
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
