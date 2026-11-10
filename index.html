@@ -13,7 +13,7 @@
  --s-top:#16a34a;--s-bot:#15803d;--s-text:#ffffff}
 html{font-size:18px}
 body{min-height:100vh;font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic","Noto Sans Arabic",Arial,sans-serif;color:var(--ink);line-height:1.8;
- background:linear-gradient(160deg,#cdeee6 0%,#dff4ef 40%,#d3ecf5 100%) fixed;display:flex;position:relative;justify-content:center;padding:18px 12px}
+ background:radial-gradient(ellipse at 50% 25%,#2b44c9 0%,#16208a 38%,#080c45 75%,#03051f 100%) fixed;display:flex;position:relative;justify-content:center;padding:18px 12px}
 .wrap{width:100%;max-width:880px}
 h1{text-align:center;font-size:1.55rem;color:var(--acc2);margin:6px 0 16px;font-weight:800}
 .card{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 6px 24px #0f766e14}
@@ -104,12 +104,44 @@ h2{color:var(--acc2);margin:22px 0 4px;text-align:center;font-size:1.25rem}
 }
 
 #bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-#bg span{position:absolute;bottom:-12vh;opacity:0;filter:saturate(.8);animation:flo linear infinite;will-change:transform,opacity}
-@keyframes flo{0%{transform:translateY(0) rotate(-12deg);opacity:0}10%{opacity:.5}85%{opacity:.5}100%{transform:translateY(-118vh) rotate(14deg);opacity:0}}
-@keyframes sway{0%,100%{margin-left:0}50%{margin-left:26px}}
+#bg::before{content:"";position:absolute;left:50%;top:22%;width:190vmax;height:190vmax;margin:-95vmax 0 0 -95vmax;background:repeating-conic-gradient(from 0deg,#8fb4ff26 0 5deg,transparent 5deg 22deg);-webkit-mask-image:radial-gradient(circle,#000 8%,transparent 55%);mask-image:radial-gradient(circle,#000 8%,transparent 55%);animation:spin 90s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#bg i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;box-shadow:0 0 6px 2px #bcd0ff;animation:tw 3s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1.4)}}
+#bg b{position:absolute;bottom:-14vh;opacity:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 88'%3E%3Cpolygon points='25,2 75,2 98,44 75,86 25,86 2,44' fill='none' stroke='%23ffc83d' stroke-width='4'/%3E%3C/svg%3E") center/contain no-repeat;animation:flo linear infinite}
+@keyframes flo{0%{transform:translateY(0) rotate(-10deg);opacity:0}12%{opacity:.5}85%{opacity:.5}100%{transform:translateY(-120vh) rotate(14deg);opacity:0}}
 .wrap{position:relative;z-index:1}
-@media(prefers-reduced-motion:reduce){#bg span{animation:none;opacity:.25;bottom:auto}}
+@media(prefers-reduced-motion:reduce){#bg::before,#bg i,#bg b{animation:none}#bg b{display:none}}
 @media print{#bg{display:none!important}}
+/* ===== مظهر «من سيربح المليون»: أزرق ملكي وذهبي ===== */
+h1{color:#ffd24d;text-shadow:0 0 18px #ffb80099,0 2px 0 #7a5200;font-size:1.75rem;letter-spacing:.3px}
+.card{border:2px solid #f2b632;box-shadow:0 0 0 4px #0a104f,0 0 30px #5f7dff55}
+#s-quiz{background:linear-gradient(180deg,#0f1a78ee,#070c47ee);border-color:#f2b632;color:#fff}
+#s-quiz .bar{color:#d6e2ff}
+#s-quiz #timer{color:#ffd24d}
+#s-quiz .hint,#s-quiz .lbl,#s-quiz .legend{color:#c9d8ff}
+#s-quiz .legend b{color:#ffd24d!important}
+#s-quiz .ord-ph{color:#4b5f7a}
+.qbox,.opt{position:relative;isolation:isolate;background:#f2b632;color:#fff;border:none;clip-path:polygon(4% 0,96% 0,100% 50%,96% 100%,4% 100%,0 50%);box-shadow:none}
+.qbox::before,.opt::before{content:"";position:absolute;inset:3px;z-index:-1;clip-path:polygon(4% 0,96% 0,100% 50%,96% 100%,4% 100%,0 50%);background:linear-gradient(180deg,#1d34b8,#0a1262)}
+.qbox{padding:22px 40px;font-size:1.3rem;min-height:100px}
+.opt{color:#fff;padding:12px 34px;min-height:70px}
+.opt .t{color:#fff;font-weight:700}
+.opt .l,.opt:nth-child(n) .l{background:none!important;color:#ff9f1c;font-size:1.25rem;width:auto;height:auto}
+.opt .l::after{content:":"}
+.opt:hover{background:#fff4c2;transform:none}
+.opt:hover::before{background:linear-gradient(180deg,#2a46d6,#101a80)}
+.opt.sel{background:#fff}
+.opt.sel::before{background:linear-gradient(180deg,#ffd45c,#f2a900)}
+.opt.sel .t,.opt.sel .l{color:#1a1200!important}
+.opt.sel::after{content:none}
+.ladder button{background:#0b1466;color:#c9d8ff;border:1.5px solid #3a4fc4}
+.ladder button.ans{background:#2b44c9;color:#fff;border-color:#8fb4ff}
+.ladder button.cur{background:#f2b632;color:#1a1200;border-color:#fff}
+#s-quiz .btn{background:#0b1466;color:#ffd24d;border-color:#f2b632}
+#s-quiz .btn:hover:not(:disabled){background:#16208a}
+#s-quiz .btn.main{background:#f2b632;color:#1a1200}
+@media(max-width:620px){.qbox{padding:18px 30px;font-size:1.12rem}.opt{padding:10px 30px}}
 @media print{
  .np,.note{display:none!important}
  body{display:block;background:#fff!important;padding:0}
@@ -156,7 +188,7 @@ h2{color:var(--acc2);margin:22px 0 4px;text-align:center;font-size:1.25rem}
    <button class="btn main" id="btn-next">التالي ←</button>
   </div>
   <div class="ladder" id="ladder"></div>
-  <div class="legend">الأرقام: <b style="color:#b45309">البرتقالي</b> = السؤال الحالي — <b style="color:#0f766e">الأخضر الفاتح</b> = تمت الإجابة. اضغط على أي رقم للانتقال إليه.</div>
+  <div class="legend">الأرقام: <b style="color:#b45309">البرتقالي</b> = السؤال الحالي — <b>الأزرق</b> = تمت الإجابة. اضغط على أي رقم للانتقال إليه.</div>
  </div>
 
  <!-- شاشة النتيجة -->
@@ -511,20 +543,22 @@ async function loadBoard(){
 
 init();
 
-/* أيقونات متحركة في الخلفية: مكوّنات الحاسوب ومجال المعلوماتية */
+/* خلفية على طراز البرامج المسابقاتية: نجوم لامعة وسداسيات ذهبية عائمة */
 (function(){
   try{
     const bg = document.getElementById('bg'); if(!bg) return;
-    const ic = ['💻','🖥️','⌨️','🖱️','💾','💿','🔌','🧠','🌐','📡','⚙️','🛡️','📱','🖨️','🔋','📶','🧮','🔍','🧩','📁','🔒','🎧','📊','🕹️','🧑‍💻','🔧','💡','📀'];
-    const n = window.innerWidth < 620 ? 14 : 26;
-    for(let i = 0; i < n; i++){
-      const e = document.createElement('span');
-      e.textContent = ic[i % ic.length];
-      e.style.left = (Math.random() * 94) + '%';
-      e.style.fontSize = (26 + Math.random() * 30) + 'px';
-      e.style.animationDuration = (16 + Math.random() * 16) + 's';
-      e.style.animationDelay = (-Math.random() * 30) + 's';
+    const small = window.innerWidth < 620;
+    for(let i = 0; i < (small ? 40 : 80); i++){
+      const e = document.createElement('i');
+      e.style.left = Math.random() * 100 + '%'; e.style.top = Math.random() * 100 + '%';
+      e.style.animationDelay = (-Math.random() * 3) + 's'; e.style.animationDuration = (2 + Math.random() * 3) + 's';
       bg.appendChild(e);
+    }
+    for(let i = 0; i < (small ? 7 : 12); i++){
+      const h = document.createElement('b'), z = 28 + Math.random() * 60;
+      h.style.width = z + 'px'; h.style.height = (z * .88) + 'px'; h.style.left = Math.random() * 94 + '%';
+      h.style.animationDuration = (18 + Math.random() * 18) + 's'; h.style.animationDelay = (-Math.random() * 30) + 's';
+      bg.appendChild(h);
     }
   }catch(e){}
 })();
